@@ -7,19 +7,18 @@ export const AuthContext = createContext();
 
 //2do paso: crear el Provider
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [isSigned, setIsSigned] = useState(false);
 
-  async function signIn(email, password) {
-    // Del lado de backend habrá una función para loguearse. A esta función le vamos a mandar el email y password y en el backend se harán las validaciones correspondientes
+  const signIn = async (email, password) => {
     const response = await usersApi.signInWithEmailAndPassword(email, password);
-    setUser(response.data.user);
+    setUser({user: response.data.user}); //Problema al momento de almacenar un json en un state
     usersApi.defaults.headers.Authorization = `Bearer ${response.data.token}`;
     setIsSigned(true);
   }
-
-  function signOut() {
-    setUser(null);
+  
+  const signOut = () => {
+    setUser({});
     setIsSigned(false);
   }
 
