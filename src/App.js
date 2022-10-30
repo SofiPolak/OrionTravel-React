@@ -7,13 +7,14 @@ import { DetalleUsuario } from './components/DetalleUsuario';
 import { AuthProvider } from './context/Auth';
 import { AuthContext } from "./context/Auth";
 import { Navigate } from "react-router-dom";
+import { Datos } from './components/Dashboard';
 
 function App() {
   return (
     <AuthProvider>
       <Routes>
         <Route path='/' element={<Home />}></Route>
-
+{/*
         <Route
           path="/usuarios"
           element={
@@ -28,6 +29,13 @@ function App() {
             <ProtectedRoute>
               <DetalleUsuario />
             </ProtectedRoute>
+          }
+        />
+        */}
+        <Route
+          path="/grafico"
+          element={
+              <Datos />
           }
         />
       </Routes>

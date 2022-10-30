@@ -24,7 +24,7 @@ export const Home = () => {
 
     try {
       await signIn(email, password);
-      navigate('usuarios', { replace: true })
+      navigate('grafico', { replace: true })
 
     } catch (err) {
       console.log(
@@ -56,7 +56,7 @@ export const Home = () => {
         </div>
       ) : (
         <div>
-          <Navigate to="/usuarios" replace />
+          <Navigate to="/grafico" replace />
         </div>
       )}
     </div>
