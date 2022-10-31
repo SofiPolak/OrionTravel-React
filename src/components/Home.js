@@ -11,27 +11,24 @@ export const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [isLogged, setLogged] = useState(false); //
+  const [isLogged, setLogged] = useState(false);
 
   const isIncompleteData = !email || !password;
 
   const onSubmit = async (event) => {
     event.preventDefault();
     if (isIncompleteData) {
-      console.log("Acceso inválido", "Todos los campos son obligatorios");
+      alert("Acceso inválido, todos los campos son obligatorios");
       return;
     }
 
     try {
       await signIn(email, password);
-      navigate('grafico', { replace: true })
+      navigate('dashboard', { replace: true })
 
     } catch (err) {
-      console.log(
-        "Acceso inválido",
-        "Correo electrónico y/o contraseña incorrecta"
-      );
-      setLogged(true);
+      alert("Acceso inválido, correo electrónico y/o contraseña incorrecta");
+      return;
     }
   };
 
@@ -56,7 +53,7 @@ export const Home = () => {
         </div>
       ) : (
         <div>
-          <Navigate to="/grafico" replace />
+          <Navigate to="/dashboard" replace />
         </div>
       )}
     </div>

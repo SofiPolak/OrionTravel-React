@@ -33,7 +33,7 @@ function App() {
         />
         */}
         <Route
-          path="/grafico"
+          path="/dashboard"
           element={
               <Datos />
           }
