@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   PieChart, 
   Pie,
@@ -13,9 +13,32 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { getCategorias } from "../services/Data";
+import { getCategorias, getMetodosPago, getGastosAnio } from "../services/Data";
 
-export const Datos = () => {
+export const Datos = (datosDeApi) => {
+
+  const [datosCategoria, setDataCategorias] = useState();
+  const [datosMetodosPago, setDataMetodosPago] = useState();
+  //const [datosGastosAnio, setDataGastosAnio] = useState();
+  //const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const dataArray = await getCategorias();
+      setDataCategorias(dataArray);
+
+      const dataArray2 = await getMetodosPago();
+      setDataMetodosPago(dataArray2);
+
+      //const dataArray3 = await getGastosAnio();
+      //setDataGastosAnio(dataArray3);
+      //setLoading(true)
+    };
+      fetchData();
+  }, [])
+
+ 
 /*
   const [categorias, setCategorias] = useState([]);
 
@@ -64,7 +87,7 @@ export const Datos = () => {
       console.log(data1)
       return data1;
     });
-    */
+    */ 
 
   const viajes =[
     {
@@ -156,7 +179,7 @@ export const Datos = () => {
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-  return (
+  /*return (
     <div>
       <h1>Dashboard</h1>
       <h2>La cantidad de viajes totales es: {viajes.map((viaje) => (viaje.count)).reduce((a, b) => a + b, 0)}</h2>
@@ -230,5 +253,90 @@ export const Datos = () => {
       </PieChart>
       </div>
       </div>
+  );*/
+
+  const renderCrecUsuarios = (
+    <div>
+    <ResponsiveContainer width={400} height={400}>
+          <LineChart
+            width={500}
+            height={300}
+            data={data1}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="userCount"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+        </div>
   );
+
+  const renderCategorias = (
+        <ResponsiveContainer width={400} height={400}>
+        <PieChart width={400} height={400}>
+          <Pie
+            dataKey="value"
+            isAnimationActive={false}
+            data={datosCategoria}
+            cx={200}
+            cy={200}
+            outerRadius={80}
+            fill="#8884d8"
+            label={renderLabel}
+          />
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
+  );
+
+  const renderMetodosPago = (
+      <PieChart width={800} height={400}>
+      <Pie
+        data={datosMetodosPago}
+        cx={120}
+        cy={200}
+        innerRadius={60}
+        outerRadius={80}
+        fill="#8884d8"
+        paddingAngle={5}
+        dataKey="value"
+        label={renderLabel2}
+      >
+        {metodosPago.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+      <Tooltip />
+      </PieChart>
+  );
+
+  return (
+    console.log(renderCategorias),
+    <Fragment>
+      <h1>Dashboard</h1>
+      <h2>La cantidad de viajes totales es: {viajes.map((viaje) => (viaje.count)).reduce((a, b) => a + b, 0)}</h2>
+      <h2>La cantidad de usuarios totales es: {usuarios.map((usuario) => (usuario.count)).reduce((a, b) => a + b, 0)}</h2>
+      <h2>La cantidad de gastos registrados es: {gastos.map((gasto) => (gasto.count)).reduce((a, b) => a + b, 0)}</h2>
+      <h1>Grafico crecimiento usuarios</h1>
+        {renderCrecUsuarios}
+      <h1>Grafico categorias</h1>
+      {renderCategorias}
+      <h1>Grafico metodos de pago</h1>
+      {renderMetodosPago}
+    </Fragment>
+);
 };
