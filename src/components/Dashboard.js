@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import {
   PieChart, 
   Pie,
-  Sector, 
   Cell,
   LineChart,
   Line,
@@ -10,9 +9,11 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
+import { Card, Col, Row } from 'antd';
+import '../index.css';
+import 'antd/dist/antd.css';
 import { getCategorias, getMetodosPago, getGastosAnio } from "../services/Data";
 
 export const Datos = (datosDeApi) => {
@@ -21,7 +22,7 @@ export const Datos = (datosDeApi) => {
   const [datosMetodosPago, setDataMetodosPago] = useState();
   //const [datosGastosAnio, setDataGastosAnio] = useState();
   //const [loading, setLoading] = useState(false);
-
+/* es esto
   useEffect(() => {
 
     const fetchData = async () => {
@@ -38,7 +39,7 @@ export const Datos = (datosDeApi) => {
       fetchData();
   }, [])
 
- 
+ */
 /*
   const [categorias, setCategorias] = useState([]);
 
@@ -155,15 +156,15 @@ export const Datos = (datosDeApi) => {
   const data1 = [
     {
       year: 2020,
-      userCount: 10,
+      total: 10,
     },
     {
       year: 2021,
-      userCount: 30,
+      total: 30,
     },
     {
       year: 2022,
-      userCount: 50,
+      total: 50,
     }
   ];
 
@@ -177,87 +178,12 @@ export const Datos = (datosDeApi) => {
     return string.concat(metodosPago.name, ": ", metodosPago.value);
   }
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-  /*return (
-    <div>
-      <h1>Dashboard</h1>
-      <h2>La cantidad de viajes totales es: {viajes.map((viaje) => (viaje.count)).reduce((a, b) => a + b, 0)}</h2>
-      <h2>La cantidad de usuarios totales es: {usuarios.map((usuario) => (usuario.count)).reduce((a, b) => a + b, 0)}</h2>
-      <h2>La cantidad de gastos registrados es: {gastos.map((gasto) => (gasto.count)).reduce((a, b) => a + b, 0)}</h2>
-      <div>
-        <h1>Grafico crecimiento usuarios</h1>
-        <ResponsiveContainer width={400} height={400}>
-          <LineChart
-            width={500}
-            height={300}
-            data={data1}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="userCount"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        </div>
-        <div>
-          <h1>Grafico categorias</h1>
-        <ResponsiveContainer width={400} height={400}>
-        <PieChart width={400} height={400}>
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={categorias}
-            cx={200}
-            cy={200}
-            outerRadius={80}
-            fill="#8884d8"
-            label={renderLabel}
-          />
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
-      </div>
-      <div>
-      <h1>Grafico metodos de pago</h1>
-      <PieChart width={800} height={400}>
-      <Pie
-        data={metodosPago}
-        cx={120}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#8884d8"
-        paddingAngle={5}
-        dataKey="value"
-        label={renderLabel2}
-      >
-        {metodosPago.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip />
-      </PieChart>
-      </div>
-      </div>
-  );*/
+  //const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const COLORS = ['#006175', '#D95032', '#FFEABB', '#FF8042'];
 
   const renderCrecUsuarios = (
     <div>
-    <ResponsiveContainer width={400} height={400}>
+    <ResponsiveContainer width={300} height={280}>
           <LineChart
             width={500}
             height={300}
@@ -270,13 +196,12 @@ export const Datos = (datosDeApi) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="year" />
-            <YAxis />
+            <XAxis dataKey="year" tick={{fontSize: 15}}/>
+            <YAxis tick={{fontSize: 15}} width={30}/>
             <Tooltip />
-            <Legend />
             <Line
               type="monotone"
-              dataKey="userCount"
+              dataKey="total"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />
@@ -286,17 +211,18 @@ export const Datos = (datosDeApi) => {
   );
 
   const renderCategorias = (
-        <ResponsiveContainer width={400} height={400}>
-        <PieChart width={400} height={400}>
+        <ResponsiveContainer width={300} height={280}>
+        <PieChart width={300} height={280} align="center">
           <Pie
             dataKey="value"
             isAnimationActive={false}
-            data={datosCategoria}
-            cx={200}
-            cy={200}
-            outerRadius={80}
-            fill="#8884d8"
+            data={categorias}
+            cx={140}
+            cy={110}
+            outerRadius={70}
+            fill={COLORS[1 % COLORS.length]}
             label={renderLabel}
+            fontSize={12}
           />
           <Tooltip />
         </PieChart>
@@ -304,17 +230,19 @@ export const Datos = (datosDeApi) => {
   );
 
   const renderMetodosPago = (
-      <PieChart width={800} height={400}>
+    <ResponsiveContainer width={300} height={280}>
+      <PieChart width={300} height={280}>
       <Pie
-        data={datosMetodosPago}
-        cx={120}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
+        data={metodosPago}
+        cx={170}
+        cy={110}
+        innerRadius={50}
+        outerRadius={70}
         fill="#8884d8"
         paddingAngle={5}
         dataKey="value"
         label={renderLabel2}
+        fontSize={12}
       >
         {metodosPago.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -322,21 +250,53 @@ export const Datos = (datosDeApi) => {
       </Pie>
       <Tooltip />
       </PieChart>
+      </ResponsiveContainer>
   );
 
   return (
     console.log(renderCategorias),
     <Fragment>
       <h1>Dashboard</h1>
-      <h2>La cantidad de viajes totales es: {viajes.map((viaje) => (viaje.count)).reduce((a, b) => a + b, 0)}</h2>
-      <h2>La cantidad de usuarios totales es: {usuarios.map((usuario) => (usuario.count)).reduce((a, b) => a + b, 0)}</h2>
-      <h2>La cantidad de gastos registrados es: {gastos.map((gasto) => (gasto.count)).reduce((a, b) => a + b, 0)}</h2>
-      <h1>Grafico crecimiento usuarios</h1>
+      <div className="site-card-wrapper">
+    <Row gutter={65}>
+      <Col span={8}>
+        <Card className="card" title="Viajes creados" bordered={true}>
+        <h2>{viajes.map((viaje) => (viaje.count)).reduce((a, b) => a + b, 0)}</h2>
+        </Card>
+      </Col>
+      <Col span={8}>
+        <Card className="card" title="Usuarios totales" bordered={true}>
+        <h2>{usuarios.map((usuario) => (usuario.count)).reduce((a, b) => a + b, 0)}</h2>
+        </Card>
+      </Col>
+      <Col span={8}>
+        <Card className="card" title="Gastos registrados" bordered={true}>
+        <h2>{gastos.map((gasto) => (gasto.count)).reduce((a, b) => a + b, 0)}</h2>
+        </Card>
+      </Col>
+    </Row>
+  </div>
+  <div className="site-card-wrapper">
+    <Row gutter={65}>
+      <Col span={8}>
+        <Card className="card2" title="Métodos de pago" bordered={true}>
+        {renderMetodosPago}
+        </Card>
+      </Col>
+      <Col span={8}>
+        <Card className="card2" title="Usuarios por año" bordered={true}>
+          <div className="grafico">
         {renderCrecUsuarios}
-      <h1>Grafico categorias</h1>
-      {renderCategorias}
-      <h1>Grafico metodos de pago</h1>
-      {renderMetodosPago}
+        </div>
+        </Card>
+      </Col>
+      <Col span={8}>
+        <Card className="card2" title="Categorías" bordered={true}>
+        {renderCategorias}
+        </Card>
+      </Col>
+    </Row>
+  </div>
     </Fragment>
 );
 };

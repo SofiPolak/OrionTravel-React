@@ -5,9 +5,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #FFEABB !important; 
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.site-card-wrapper {
+  padding: 10px;
+  background: #006175;
+}
+
+h1 {
+  color: #D95032 !important;
+  text-align:center;
+  font-size:350%;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.card {
+  border-radius: 30px !important;
+  font-size:250% !important;
+  padding: 10px !important;
+  text-align: center;
+  height:170px;
+}
+
+.card2 {
+  border-radius: 30px !important;
+  font-size:250% !important;
+  padding: 10px !important;
+  text-align: center;
+  height:370px;
 }
