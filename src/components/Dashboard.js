@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, button, useContext } from "react";
 import {
   PieChart, 
   Pie,
@@ -11,29 +11,67 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Card, Col, Row } from 'antd';
+import { Button, Card, Col, Row } from 'antd';
 import '../index.css';
 import 'antd/dist/antd.css';
 import { getCategorias, getMetodosPago, getGastosAnio } from "../services/Data";
+import { AuthContext } from "../context/Auth";
+import { useNavigate , Navigate } from "react-router-dom";
 
 export const Datos = (datosDeApi) => {
 
+  const { signOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+      await signOut();
+      navigate('/', { replace: true })
+    }
+
   const [datosCategoria, setDataCategorias] = useState();
   const [datosMetodosPago, setDataMetodosPago] = useState();
+  //const [datosUsuariosAnio, setDataUsuariosAnio] = useState();
   //const [datosGastosAnio, setDataGastosAnio] = useState();
+  //const [datosViajesAnio, setDataViajesAnio] = useState();
   //const [loading, setLoading] = useState(false);
 /* es esto
   useEffect(() => {
 
     const fetchData = async () => {
       const dataArray = await getCategorias();
+      dataArray = dataArray.map(({category, count}) => {
+        return{
+        name: category,
+        value: count
+        }
+      });
       setDataCategorias(dataArray);
 
       const dataArray2 = await getMetodosPago();
+      dataArray2 = dataArray2.map(({paymentMethod, count}) => {
+        return{
+        name: paymentMethod,
+        value: count
+        }
+      });
       setDataMetodosPago(dataArray2);
 
-      //const dataArray3 = await getGastosAnio();
-      //setDataGastosAnio(dataArray3);
+      // const dataArray3 = await getUsuariosAnio();
+      // dataArray3 = dataArray3.map(({year, count}) => {
+      //   return{
+      //   year: year,
+      //   total: count
+      //   }
+      // });
+      // setDataUsuariosAnio(dataArray3);
+
+      // const dataArray4 = await getGastosAnio();
+      // setDataGastosAnio(dataArray4);
+      
+      // const dataArray5 = await getViajesAnio();
+      // setDataViajesAnio(dataArray5);
+
       //setLoading(true)
     };
       fetchData();
@@ -256,7 +294,12 @@ export const Datos = (datosDeApi) => {
   return (
     console.log(renderCategorias),
     <Fragment>
-      <h1>Dashboard</h1>
+      <div class="border d-table w-100">
+          <p class="d-table-cell">Dashboard</p>
+        <div class="d-table-cell tar">
+          <button className="boton" onClick={onSubmit}>Logout</button>
+        </div>
+      </div>
       <div className="site-card-wrapper">
     <Row gutter={65}>
       <Col span={8}>

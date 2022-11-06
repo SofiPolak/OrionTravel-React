@@ -4,8 +4,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #FFEABB !important; 
+  -moz-osx-font-smoothing: grayscale; 
 }
 
 code {
@@ -20,15 +19,14 @@ code {
 
 h1 {
   color: #D95032 !important;
-  text-align:center;
   font-size:350%;
   text-shadow: 2px 2px 4px #000000;
+  text-align:center;
 }
 
 .card {
   border-radius: 30px !important;
   font-size:250% !important;
-  padding: 10px !important;
   text-align: center;
   height:170px;
 }
@@ -39,4 +37,33 @@ h1 {
   padding: 10px !important;
   text-align: center;
   height:370px;
+}
+
+.boton{
+  float: right;
+  background-color: #FFEABB;
+  border-radius: 10%;
+}
+
+.d-table {
+  display:table;
+}
+
+.d-table-cell {
+  display:table-cell;
+  color: black;
+  padding-left: 10%;
+  padding-bottom: 0.98%;
+  padding-left: 39%;
+  font-size: 400%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.tar {
+  text-align: right;
+  padding: 0.95%;
+  font-size: small;
 }
