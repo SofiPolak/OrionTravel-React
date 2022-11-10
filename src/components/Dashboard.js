@@ -17,6 +17,7 @@ import 'antd/dist/antd.css';
 import { getCategorias, getMetodosPago, getGastosAnio } from "../services/Data";
 import { AuthContext } from "../context/Auth";
 import { useNavigate , Navigate } from "react-router-dom";
+import { Navbar } from "./Navbar/Navbar";
 
 export const Datos = (datosDeApi) => {
 
@@ -294,12 +295,13 @@ export const Datos = (datosDeApi) => {
   return (
     console.log(renderCategorias),
     <Fragment>
-      <div class="border d-table w-100">
+      <Navbar/>
+      {/* <div class="border d-table w-100">
           <p class="d-table-cell">Dashboard</p>
         <div class="d-table-cell tar">
           <button className="boton" onClick={onSubmit}>Logout</button>
         </div>
-      </div>
+      </div> */}
       <div className="site-card-wrapper">
     <Row gutter={65}>
       <Col span={8}>
